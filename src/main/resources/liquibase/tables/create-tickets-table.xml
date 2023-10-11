@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xci="http://www.w3.org/2001/XMLSchema-instance"
+        xci:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="create-tickets-table" author="stanislav">
+        <preConditions>
+            <not>
+                <tableExists tableName="tickets"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="tickets">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="departure_point" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="destination" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duration_in_minutes" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="company_name" type="VARCHAR(48)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_time_departure" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seat_number" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_time_ticket_issuance" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ticket_status" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="add-new-columns" author="stanislav">
+        <addColumn tableName="tickets">
+            <column name="login" type="VARCHAR(16)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middle_name" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="delete-column-login" author="stanislav">
+        <dropColumn tableName="tickets">
+            <column name="login" type="VARCHAR(16)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet id="add-column-login" author="stanislav">
+        <addColumn tableName="tickets">
+            <column name="login" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
